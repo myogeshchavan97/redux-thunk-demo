@@ -1,10 +1,15 @@
-import { createStore } from 'redux';
-import usersReducer from '../reducers/users';
+import { createStore, applyMiddleware, compose } from "redux";
+import usersReducer from "../reducers/users";
+import reduxThunk from "redux-thunk";
 
-const store = createStore(usersReducer);
+const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
+const store = createStore(
+  usersReducer,
+  composeEnhancers(applyMiddleware(reduxThunk))
+);
 
 store.subscribe(() => {
-    console.log('store data:', store.getState());
+  console.log("store data:", store.getState());
 });
 
 export default store;
